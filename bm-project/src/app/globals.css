@@ -1,26 +1,169 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* الألوان الأساسية - مستوحاة من الشعار */
+  --primary: #7e471d; /* البني الفاتح/البرتقالي من الشعار */
+  --primary-dark: #4b2e2d; /* البني الداكن من الشعار */
+  --primary-light: #d4a57f; /* درجة أفتح من اللون الأساسي */
+  
+  /* الألوان المحايدة - متناسقة مع الألوان الترابية */
+  --background: #fdfaf5; /* لون بيج فاتح جدًا */
+  --foreground: #2d1b1a; /* لون بني داكن جدًا للنصوص */
+  --muted: #f5f0e6; /* لون بيج خفيف للخلفيات الثانوية */
+  --muted-foreground: #6c544d; /* لون بني متوسط للنصوص الثانوية */
+  --border: #e6d8c4; /* لون بني فاتح للحدود */
+  
+  /* ألوان الحالة - معدلة لتتناسب مع الطابع الترابي */
+  --success: #10b981; /* أخضر */
+  --warning: #f59e0b; /* برتقالي */
+  --error: #ef4444; /* أحمر */
+  --info: #06b6d4; /* أزرق سماوي */
+  
+  /* ألوان التدرج */
+  --gradient-start: #a87955;
+  --gradient-end: #4b2e2d;
+  
+  /* الخطوط الرسمية */
+  --font-primary: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: var(--font-roboto), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #17100b; /* بني داكن جدًا للخلفية */
+    --foreground: #e6d8c4; /* بني فاتح للنصوص */
+    --muted: #2d1b1a; /* لون داكن للأقسام الثانوية */
+    --muted-foreground: #a87955; /* لون الشعار للنصوص الثانوية */
+    --border: #4b2e2d; /* لون الشعار للحدود */
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-primary);
+  font-weight: 400;
+  line-height: 1.6;
+  direction: rtl;
+  text-align: right;
 }
+
+/* تطبيق الخطوط على العناصر المختلفة */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* فئات مساعدة للخطوط */
+.font-primary {
+  font-family: var(--font-primary);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+/* أنماط RTL */
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+/* تحسينات للتخطيط RTL */
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.space-x-reverse > * + * {
+  margin-right: 0.5rem;
+  margin-left: 0;
+}
+
+.ml-auto {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.mr-auto {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* أوزان الخطوط */
+.font-light { font-weight: 300; }
+.font-normal { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.font-extrabold { font-weight: 800; }
+.font-black { font-weight: 900; }
+
+/* رسوم متحركة مخصصة */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
+/* أنماط النص المتحرك */
+.typing-text {
+  display: inline-block;
+  min-height: 1.2em;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.typing-cursor {
+  display: inline-block;
+  animation: blink 1s infinite;
+  color: #ffffff;
+  font-weight: normal;
+  margin-left: 2px;
+}
+
+/* فئات مساعدة للألوان */
+.text-primary { color: var(--primary); }
+.text-secondary { color: var(--primary-dark); }
+.bg-primary { background-color: var(--primary); }
+.bg-secondary { background-color: var(--primary-dark); }
+.bg-gradient { background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); }
+.border-primary { border-color: var(--primary); }
+.hover\:bg-primary-dark:hover { background-color: var(--primary-dark); }
+.hover\:bg-secondary-dark:hover { background-color: var(--primary); }
