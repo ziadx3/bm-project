@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow create: if request.auth != null && request.auth.uid == uid && request.resource.data.role in ['company','jobSeeker'] && request.resource.data.role != 'admin';
+      allow update: if request.auth != null && request.auth.uid == uid && (!('role' in request.resource.data) || request.resource.data.role in ['company','jobSeeker']);
+    }
+    match /companies/{companyId} {
+      allow read: if true;
+      allow create: if request.auth != null && request.resource.data.ownerUid == request.auth.uid;
+      allow update, delete: if request.auth != null && resource.data.ownerUid == request.auth.uid;
+    }
+    match /jobs/{jobId} {
+      allow read: if true;
+      allow create: if request.auth != null && request.resource.data.ownerUid == request.auth.uid;
+      allow update, delete: if request.auth != null && resource.data.ownerUid == request.auth.uid;
+    }
+    match /trainingPrograms/{programId} {
+      allow read: if true;
+      allow create: if request.auth != null && request.resource.data.ownerUid == request.auth.uid;
+      allow update, delete: if request.auth != null && resource.data.ownerUid == request.auth.uid;
+    }
+    match /jobApplications/{appId} {
+      allow read: if request.auth != null && (resource.data.seekerUid == request.auth.uid || resource.data.ownerUid == request.auth.uid);
+      allow create: if request.auth != null && request.resource.data.seekerUid == request.auth.uid;
+      allow update, delete: if request.auth != null && (resource.data.seekerUid == request.auth.uid || resource.data.ownerUid == request.auth.uid);
+    }
+    match /programRegistrations/{regId} {
+      allow read: if request.auth != null && (resource.data.seekerUid == request.auth.uid || resource.data.ownerUid == request.auth.uid);
+      allow create: if request.auth != null && request.resource.data.seekerUid == request.auth.uid;
+      allow update, delete: if request.auth != null && (resource.data.seekerUid == request.auth.uid || resource.data.ownerUid == request.auth.uid);
+    }
+  }
+}

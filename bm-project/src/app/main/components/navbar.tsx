@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useAuth } from '../../providers/AuthProvider';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,6 +12,7 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const { user, role, logout } = useAuth();
   return (
     <nav className="bg-white/95 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-2">
@@ -38,9 +40,6 @@ const Navbar = () => {
               <Link href="#features" className="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 الميزات
               </Link>
-              <Link href="#plans" className="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                الخطط
-              </Link>
               <Link href="#clients" className="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 عملاؤنا
               </Link>
@@ -50,14 +49,27 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* أزرار تسجيل الدخول والاشتراك */}
+          {/* أزرار حسب حالة المستخدم */}
           <div className="hidden md:flex items-center space-x-reverse space-x-4">
-            <Link href="/login" className="text-gray-700 hover:text-primary px-4 py-2 rounded-md text-sm font-medium transition-colors">
-              تسجيل الدخول
-            </Link>
-            <Link href="/signup" className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors">
-              إنشاء حساب
-            </Link>
+            {user ? (
+              <>
+                {role === 'company' && (
+                  <Link href="/dashboard/company" className="text-gray-700 hover:text-primary px-4 py-2 rounded-md text-sm font-medium transition-colors">لوحة الشركة</Link>
+                )}
+                {role === 'jobSeeker' && (
+                  <Link href="/dashboard/seeker" className="text-gray-700 hover:text-primary px-4 py-2 rounded-md text-sm font-medium transition-colors">لوحة الباحث</Link>
+                )}
+                {role === 'admin' && (
+                  <Link href="/dashboard/admin" className="text-gray-700 hover:text-primary px-4 py-2 rounded-md text-sm font-medium transition-colors">لوحة الإدارة</Link>
+                )}
+                <button onClick={logout} className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-6 py-2 rounded-lg text-sm font-medium transition-colors">تسجيل الخروج</button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="text-gray-700 hover:text-primary px-4 py-2 rounded-md text-sm font-medium transition-colors">تسجيل الدخول</Link>
+                <Link href="/signup" className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors">إنشاء حساب</Link>
+              </>
+            )}
           </div>
 
           {/* زر القائمة للهاتف المحمول */}
@@ -88,9 +100,6 @@ const Navbar = () => {
             <Link href="#features" className="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">
               الميزات
             </Link>
-            <Link href="#plans" className="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">
-              الخطط
-            </Link>
             <Link href="#clients" className="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">
               عملاؤنا
             </Link>
@@ -99,12 +108,25 @@ const Navbar = () => {
             </Link>
             <div className="pt-4 pb-3 border-t border-gray-200">
               <div className="flex items-center px-3 space-y-2 flex-col">
-                <Link href="/login" className="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-center">
-                  تسجيل الدخول
-                </Link>
-                <Link href="/signup" className="bg-primary hover:bg-primary-dark text-white block px-3 py-2 rounded-lg text-base font-medium w-full text-center">
-                  إنشاء حساب
-                </Link>
+                {user ? (
+                  <>
+                    {role === 'company' && (
+                      <Link href="/dashboard/company" className="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-center">لوحة الشركة</Link>
+                    )}
+                    {role === 'jobSeeker' && (
+                      <Link href="/dashboard/seeker" className="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-center">لوحة الباحث</Link>
+                    )}
+                    {role === 'admin' && (
+                      <Link href="/dashboard/admin" className="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-center">لوحة الإدارة</Link>
+                    )}
+                    <button onClick={logout} className="bg-gray-100 hover:bg-gray-200 text-gray-800 block px-3 py-2 rounded-lg text-base font-medium w-full text-center">تسجيل الخروج</button>
+                  </>
+                ) : (
+                  <>
+                    <Link href="/login" className="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-center">تسجيل الدخول</Link>
+                    <Link href="/signup" className="bg-primary hover:bg-primary-dark text-white block px-3 py-2 rounded-lg text-base font-medium w-full text-center">إنشاء حساب</Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
