@@ -157,15 +157,14 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      {/* خلفية زخرفية */}
-      <div className="absolute inset-0 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
+      <div className="absolute inset-0 overflow-hidden z-0">
         <div className="absolute top-20 right-20 w-72 h-72 bg-primary/10 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 left-20 w-72 h-72 bg-secondary/10 rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-4000"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-2000"></div>
       </div>
 
-      <div className="max-w-2xl w-full space-y-8 relative">
+      <div className="max-w-2xl w-full space-y-8 relative z-10">
         {/* الشعار والعنوان */}
         <div className="text-center">
           <Link href="/" className="inline-block mb-8">
@@ -202,19 +201,21 @@ export default function SignupPage() {
                 <button
                   type="button"
                   onClick={() => setUserType('jobSeeker')}
-                  className={`flex items-center justify-center gap-2 p-3 rounded-lg border-2 transition-all ${
-                    userType === 'jobSeeker' ? 'bg-[#f5f0e6] border-[#7e471d] text-[#4b2e2d]' : 'border-gray-200 hover:border-gray-300'
+                  className={`flex items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all ${
+                    userType === 'jobSeeker' ? 'bg-primary/10 border-primary text-gray-900 shadow-sm' : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
+                  <svg className="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 12c2.485 0 4.5-2.015 4.5-4.5S14.485 3 12 3 7.5 5.015 7.5 7.5 9.515 12 12 12zm0 2c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z"/></svg>
                   باحث عن عمل
                 </button>
                 <button
                   type="button"
                   onClick={() => setUserType('company')}
-                  className={`flex items-center justify-center gap-2 p-3 rounded-lg border-2 transition-all ${
-                    userType === 'company' ? 'bg-[#e6d8c4] border-[#4b2e2d] text-[#2d1b1a]' : 'border-gray-200 hover:border-gray-300'
+                  className={`flex items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all ${
+                    userType === 'company' ? 'bg-secondary/10 border-secondary text-gray-900 shadow-sm' : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
+                  <svg className="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10l9-7 9 7v10a2 2 0 01-2 2h-4v-6H9v6H5a2 2 0 01-2-2V10z"/></svg>
                   شركة
                 </button>
               </div>
@@ -473,7 +474,7 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={isLoading || !acceptTerms}
-              className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-lg font-bold rounded-xl text-white bg-gradient-to-r from-primary to-secondary hover:from-primary-dark hover:to-secondary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="group relative w-full flex justify-center py-4 px-4 text-lg font-bold rounded-xl text-white bg-primary bg-gradient-to-r from-primary to-secondary shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-white transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               {isLoading ? (
                 <div className="flex items-center">

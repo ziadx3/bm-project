@@ -1,9 +1,9 @@
 import Navbar from './components/navbar';
 import Hero from './components/hero';
 import Features from './components/features';
-import OurClients from './components/ourclients';
-import ContactUs from './components/contactus';
 import Footer from './components/footer';
+
+export const metadata = { title: 'قوام' };
 
 export default function MainPage() {
   return (
@@ -11,8 +11,6 @@ export default function MainPage() {
       <Navbar />
       <Hero />
       <Features />
-      <OurClients />
-      <ContactUs />
       <Footer />
     </main>
   );

@@ -10,10 +10,10 @@ const Hero = () => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const phrases = [
-    "احنا نفكر",
-    "احنا نبدع", 
-    "احنا نخطط",
-    "احنا ندير"
+    "وظائف",
+    "برامج تدريب",
+    "توظيف أسرع",
+    "ربط الشركات بالباحثين"
   ];
 
   // صور العرض - يمكن استبدالها بصور حقيقية
@@ -126,8 +126,11 @@ const Hero = () => {
                     </span>
                   </h1>
                 </div>
-                
-
+                <h2 className="text-xl md:text-2xl text-white/90">منصة تربط الشركات بالباحثين عن عمل وتسهّل التقديم على الوظائف والبرامج التدريبية</h2>
+                <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link href="/signup" className="px-8 py-4 bg-primary text-white rounded-xl font-bold hover:opacity-90">إنشاء حساب</Link>
+                  <Link href="/login" className="px-8 py-4 bg-white/10 text-white rounded-xl font-bold border border-white/20 hover:bg-white/20">تسجيل الدخول</Link>
+                </div>
               </div>
             </div>
           </div>

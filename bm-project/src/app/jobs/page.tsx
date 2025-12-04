@@ -72,8 +72,18 @@ export default function JobsPage() {
         </div>
       )}
       <div className="mt-6 flex gap-3">
-        <Link href="/dashboard/seeker" className="px-4 py-2 bg-primary text-white rounded-lg">لوحة الباحث</Link>
-        <Link href="/dashboard/company" className="px-4 py-2 bg-secondary text-white rounded-lg">لوحة الشركة</Link>
+        {role === 'jobSeeker' && (
+          <Link href="/dashboard/seeker" className="px-4 py-2 bg-primary text-white rounded-lg">لوحة الباحث</Link>
+        )}
+        {role === 'company' && (
+          <Link href="/dashboard/company" className="px-4 py-2 bg-secondary text-white rounded-lg">لوحة الشركة</Link>
+        )}
+        {!role && (
+          <>
+            <Link href="/login" className="px-4 py-2 bg-primary text-white rounded-lg">سجّل الدخول</Link>
+            <Link href="/signup" className="px-4 py-2 bg-secondary text-white rounded-lg">إنشاء حساب</Link>
+          </>
+        )}
       </div>
     </div>
   );

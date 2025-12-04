@@ -2,66 +2,24 @@
 
 const Features = () => {
   const features = [
-    {
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-      ),
-      title: "تحليلات متقدمة",
-      description: "احصل على رؤى عميقة حول أداء أعمالك مع تقارير تفاعلية ولوحات معلومات شاملة",
-      color: "primary"
-    },
-    {
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
-      ),
-      title: "إدارة الفريق",
-      description: "نظم فريقك وتابع مهامهم وتقدمهم في الوقت الفعلي مع أدوات التعاون المتقدمة",
-      color: "secondary"
-    },
-    {
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-        </svg>
-      ),
-      title: "أمان متقدم",
-      description: "حماية بيانات عملك بأعلى معايير الأمان مع التشفير والنسخ الاحتياطي التلقائي",
-      color: "success"
-    },
-    {
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>
-      ),
-      title: "أتمتة المهام",
-      description: "وفر الوقت والجهد مع أدوات الأتمتة الذكية التي تتولى المهام المتكررة",
-      color: "warning"
-    },
-    {
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
-        </svg>
-      ),
-      title: "تقارير ذكية",
-      description: "تقارير تلقائية مفصلة تساعدك على اتخاذ قرارات مدروسة لنمو أعمالك",
-      color: "info"
-    },
-    {
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-        </svg>
-      ),
-      title: "تطبيق محمول",
-      description: "إدارة أعمالك من أي مكان مع تطبيقنا المحمول المتاح على جميع الأجهزة",
-      color: "secondary"
-    }
+    { icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h8M8 11h8M8 15h8" /></svg>
+    ), title: "نشر وظائف بسهولة", description: "إنشاء ونشر فرص عمل مع تفاصيل واضحة", color: "primary" },
+    { icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+    ), title: "التقديم السريع", description: "تقديم الباحثين على الوظائف بملفهم وبياناتهم", color: "secondary" },
+    { icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c1.657 0 3 1.343 3 3v5H9v-5c0-1.657 1.343-3 3-3z" /></svg>
+    ), title: "برامج تدريب", description: "نشر وتسجيل في البرامج التدريبية", color: "success" },
+    { icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5" /></svg>
+    ), title: "إشعارات فورية", description: "تنبيهات بالطلبات والقبول والرفض", color: "warning" },
+    { icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7h18M6 10h12M8 13h8" /></svg>
+    ), title: "لوحة للشركات", description: "إدارة الوظائف والمتقدمين بسهولة", color: "info" },
+    { icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 7l-9-5V9" /></svg>
+    ), title: "ملف الباحث", description: "عرض المهارات والسيرة وروابط الملف", color: "secondary" }
   ];
 
   const getColorClasses = (color: string) => {
@@ -86,18 +44,9 @@ const Features = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* العنوان الرئيسي */}
         <div className="text-center mb-20">
-          <div className="inline-flex items-center justify-center px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6">
-            ✨ ميزات متطورة
-          </div>
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            ميزات تجعل إدارة أعمالك
-            <span className="block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              أسهل وأكثر فعالية
-            </span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            اكتشف مجموعة شاملة من الأدوات والميزات المصممة خصيصاً لتلبية احتياجات أعمالك وتحقيق أهدافك بكفاءة عالية
-          </p>
+          <div className="inline-flex items-center justify-center px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-6">دليل سريع</div>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">كل ما تحتاجه للتوظيف والتدريب</h2>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">منصة تربط الشركات بالباحثين، تنشر وظائف وبرامج وتسهّل التقديم والمتابعة</p>
         </div>
 
         {/* شبكة الميزات */}
@@ -133,25 +82,7 @@ const Features = () => {
           ))}
         </div>
 
-        {/* قسم إضافي */}
-        <div className="mt-20 text-center">
-          <div className="bg-white rounded-3xl p-12 shadow-xl border border-gray-100">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              جاهز لتجربة الفرق؟
-            </h3>
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              انضم إلى آلاف الشركات التي تستخدم منصتنا لإدارة أعمالها بكفاءة أكبر
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                ابدأ التجربة المجانية
-              </button>
-              <button className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300">
-                تحدث مع خبير
-              </button>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </section>
   );

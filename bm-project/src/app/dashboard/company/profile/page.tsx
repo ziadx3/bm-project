@@ -1,7 +1,9 @@
 "use client";
 import RequireRole from "../../../components/RequireRole";
 import DashboardNavbar from "../../../components/DashboardNavbar";
+import CompanyHeader from "../components/Header";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/app/providers/AuthProvider";
 import { auth, db } from "@/lib/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
@@ -9,6 +11,7 @@ export default function CompanyProfilePage() {
   const [form, setForm] = useState({ firstName: "", lastName: "", phone: "", company: "" })
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const { notify } = useAuth()
 
   useEffect(() => {
     (async () => {
@@ -26,8 +29,12 @@ export default function CompanyProfilePage() {
     setSaving(true)
     const uid = auth.currentUser?.uid
     if (uid) {
-      await updateDoc(doc(db, 'users', uid), { firstName: form.firstName, lastName: form.lastName, phone: form.phone, company: form.company })
-      alert('تم تحديث البيانات')
+      try {
+        await updateDoc(doc(db, 'users', uid), { firstName: form.firstName, lastName: form.lastName, phone: form.phone, company: form.company })
+        notify('تم تحديث البيانات', 'success')
+      } catch (e: any) {
+        notify(e?.message || 'تعذّر التحديث', 'error')
+      }
     }
     setSaving(false)
   }
@@ -36,7 +43,7 @@ export default function CompanyProfilePage() {
     <RequireRole allowed={["company"]}>
       <DashboardNavbar />
       <div className="min-h-screen px-6 py-10 bg-white">
-        <h1 className="text-3xl font-bold">بيانات الشركة</h1>
+        <CompanyHeader title="بيانات الشركة" subtitle="حدّث معلومات حساب شركتك" />
         {loading ? (
           <p className="mt-6 text-gray-500">جاري التحميل...</p>
         ) : (

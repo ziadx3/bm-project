@@ -1,6 +1,7 @@
 "use client";
 import RequireRole from "../../../components/RequireRole";
 import DashboardNavbar from "../../../components/DashboardNavbar";
+import CompanyHeader from "../components/Header";
 import { useEffect, useState } from "react";
 import { auth, db } from "@/lib/firebase";
 import { collection, getDocs, query, where, doc, updateDoc } from "firebase/firestore";
@@ -36,7 +37,7 @@ export default function CompanyJobsPage() {
     <RequireRole allowed={["company"]}>
       <DashboardNavbar />
       <div className="min-h-screen px-6 py-10 bg-white">
-        <h1 className="text-3xl font-bold">إدارة الوظائف</h1>
+        <CompanyHeader title="إدارة الوظائف" subtitle="تابع وظائفك وقم بتبديل حالتها" />
         {loading ? (
           <p className="mt-6 text-gray-500">جاري التحميل...</p>
         ) : (
@@ -50,6 +51,7 @@ export default function CompanyJobsPage() {
                 <p className="mt-3 text-gray-700 leading-7">{job.description}</p>
                 <div className="mt-5 flex gap-3">
                   <button onClick={() => toggleStatus(job.id, job.status)} className="px-4 py-2 bg-primary text-white rounded-lg">تبديل الحالة</button>
+                  <a href={`/dashboard/company/jobs/${job.id}/applicants`} className="px-4 py-2 bg-gray-100 text-gray-900 rounded-lg border border-gray-200">عرض المتقدمين</a>
                 </div>
               </div>
             ))}

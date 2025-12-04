@@ -1,35 +1,65 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
     match /users/{uid} {
-      allow read: if request.auth != null && request.auth.uid == uid;
-      allow create: if request.auth != null && request.auth.uid == uid && request.resource.data.role in ['company','jobSeeker'] && request.resource.data.role != 'admin';
+      allow read: if request.auth != null && (request.auth.uid == uid || isAdmin());
+      allow create: if request.auth != null && request.auth.uid == uid && request.resource.data.role in ['company','jobSeeker'];
       allow update: if request.auth != null && request.auth.uid == uid && (!('role' in request.resource.data) || request.resource.data.role in ['company','jobSeeker']);
     }
     match /companies/{companyId} {
       allow read: if true;
       allow create: if request.auth != null && request.resource.data.ownerUid == request.auth.uid;
-      allow update, delete: if request.auth != null && resource.data.ownerUid == request.auth.uid;
+      allow update, delete: if request.auth != null && (resource.data.ownerUid == request.auth.uid || isAdmin());
     }
     match /jobs/{jobId} {
       allow read: if true;
       allow create: if request.auth != null && request.resource.data.ownerUid == request.auth.uid;
-      allow update, delete: if request.auth != null && resource.data.ownerUid == request.auth.uid;
+      allow update, delete: if request.auth != null && (resource.data.ownerUid == request.auth.uid || isAdmin());
     }
     match /trainingPrograms/{programId} {
       allow read: if true;
       allow create: if request.auth != null && request.resource.data.ownerUid == request.auth.uid;
-      allow update, delete: if request.auth != null && resource.data.ownerUid == request.auth.uid;
+      allow update, delete: if request.auth != null && (resource.data.ownerUid == request.auth.uid || isAdmin());
     }
     match /jobApplications/{appId} {
-      allow read: if request.auth != null && (resource.data.seekerUid == request.auth.uid || resource.data.ownerUid == request.auth.uid);
+      allow read: if request.auth != null && (
+        (resource.data.seekerUid == request.auth.uid) ||
+        (resource.data.ownerUid == request.auth.uid) ||
+        (get(/databases/$(database)/documents/jobs/$(resource.data.jobId)).data.ownerUid == request.auth.uid) ||
+        isAdmin()
+      );
       allow create: if request.auth != null && request.resource.data.seekerUid == request.auth.uid;
-      allow update, delete: if request.auth != null && (resource.data.seekerUid == request.auth.uid || resource.data.ownerUid == request.auth.uid);
+      allow update, delete: if request.auth != null && (
+        (resource.data.seekerUid == request.auth.uid) ||
+        (resource.data.ownerUid == request.auth.uid) ||
+        (get(/databases/$(database)/documents/jobs/$(resource.data.jobId)).data.ownerUid == request.auth.uid) ||
+        isAdmin()
+      );
     }
     match /programRegistrations/{regId} {
-      allow read: if request.auth != null && (resource.data.seekerUid == request.auth.uid || resource.data.ownerUid == request.auth.uid);
+      allow read: if request.auth != null && (
+        (resource.data.seekerUid == request.auth.uid) ||
+        (resource.data.ownerUid == request.auth.uid) ||
+        (get(/databases/$(database)/documents/trainingPrograms/$(resource.data.programId)).data.ownerUid == request.auth.uid) ||
+        isAdmin()
+      );
       allow create: if request.auth != null && request.resource.data.seekerUid == request.auth.uid;
-      allow update, delete: if request.auth != null && (resource.data.seekerUid == request.auth.uid || resource.data.ownerUid == request.auth.uid);
+      allow update, delete: if request.auth != null && (
+        (resource.data.seekerUid == request.auth.uid) ||
+        (resource.data.ownerUid == request.auth.uid) ||
+        (get(/databases/$(database)/documents/trainingPrograms/$(resource.data.programId)).data.ownerUid == request.auth.uid) ||
+        isAdmin()
+      );
+    }
+    match /notifications/{notifId} {
+      allow read: if request.auth != null && (resource.data.userUid == request.auth.uid || isAdmin());
+      allow create: if request.auth != null && isAdmin();
+      allow update: if request.auth != null && resource.data.userUid == request.auth.uid;
+      allow delete: if request.auth != null && (resource.data.userUid == request.auth.uid || isAdmin());
     }
   }
 }

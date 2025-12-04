@@ -9,7 +9,7 @@ import { auth, db } from '@/lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
 export default function LoginPage() {
-  const { login, role, refreshRole, error } = useAuth();
+  const { login, role, refreshRole, error, logout } = useAuth();
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
@@ -22,6 +22,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [authError, setAuthError] = useState('');
+  const [userType, setUserType] = useState<'jobSeeker' | 'company'>('jobSeeker');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -81,14 +82,19 @@ export default function LoginPage() {
         const data = snap.data() as { role?: 'company' | 'admin' | 'jobSeeker' } | undefined;
         r = (data?.role || 'jobSeeker');
       }
+      if (r !== userType && r !== 'admin') {
+        setAuthError('نوع الحساب المختار لا يطابق دور حسابك. الرجاء اختيار النوع الصحيح.');
+        await logout();
+        return;
+      }
       if (r === 'company') {
-        if (typeof window !== 'undefined') window.localStorage.setItem('bm_role', 'company')
+        if (typeof window !== 'undefined') window.localStorage.setItem('bm_role', 'company');
         router.push('/dashboard/company');
       } else if (r === 'admin') {
-        if (typeof window !== 'undefined') window.localStorage.setItem('bm_role', 'admin')
+        if (typeof window !== 'undefined') window.localStorage.setItem('bm_role', 'admin');
         router.push('/dashboard/admin');
       } else {
-        if (typeof window !== 'undefined') window.localStorage.setItem('bm_role', 'jobSeeker')
+        if (typeof window !== 'undefined') window.localStorage.setItem('bm_role', 'jobSeeker');
         router.push('/dashboard/seeker');
       }
     } catch (error: any) {
@@ -107,14 +113,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      {/* خلفية زخرفية */}
-      <div className="absolute inset-0 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
+      <div className="absolute inset-0 overflow-hidden z-0">
         <div className="absolute top-20 right-20 w-72 h-72 bg-primary/10 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 left-20 w-72 h-72 bg-secondary/10 rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-4000"></div>
       </div>
 
-      <div className="max-w-md w-full space-y-8 relative">
+      <div className="max-w-md w-full space-y-8 relative z-10">
         {/* الشعار والعنوان */}
         <div className="text-center">
           <Link href="/" className="inline-block mb-8">
@@ -142,6 +147,31 @@ export default function LoginPage() {
         {/* نموذج تسجيل الدخول */}
         <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-gray-200/50 p-8">
           <form className="space-y-6" onSubmit={handleSubmit}>
+            <div className="space-y-3">
+              <label className="block text-sm font-bold text-gray-700">نوع الحساب</label>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => setUserType('jobSeeker')}
+                  className={`flex items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all ${
+                    userType === 'jobSeeker' ? 'bg-primary/10 border-primary text-gray-900 shadow-sm' : 'border-gray-200 hover:border-gray-300'
+                  }`}
+                >
+                  <svg className="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 12c2.485 0 4.5-2.015 4.5-4.5S14.485 3 12 3 7.5 5.015 7.5 7.5 9.515 12 12 12zm0 2c-3.314 0-6 2.239-6 5v1h12v-1c0-2.761-2.686-5-6-5z"/></svg>
+                  باحث عن عمل
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setUserType('company')}
+                  className={`flex items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all ${
+                    userType === 'company' ? 'bg-secondary/10 border-secondary text-gray-900 shadow-sm' : 'border-gray-200 hover:border-gray-300'
+                  }`}
+                >
+                  <svg className="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10l9-7 9 7v10a2 2 0 01-2 2h-4v-6H9v6H5a2 2 0 01-2-2V10z"/></svg>
+                  شركة
+                </button>
+              </div>
+            </div>
             {/* البريد الإلكتروني */}
             <div>
               <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-2">
@@ -244,7 +274,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-lg font-bold rounded-xl text-white bg-gradient-to-r from-primary to-secondary hover:from-primary-dark hover:to-secondary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="group relative w-full flex justify-center py-4 px-4 text-lg font-bold rounded-xl text-white bg-primary bg-gradient-to-r from-primary to-secondary shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-white transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               {isLoading ? (
                 <div className="flex items-center">
@@ -270,7 +300,7 @@ export default function LoginPage() {
           {/* رابط إنشاء حساب جديد */}
           <div className="mt-8 text-center">
             <p className="text-gray-600 mb-4">ليس لديك حساب؟</p>
-            <Link href="/signup" className="inline-block bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-xl font-bold hover:from-primary-dark hover:to-secondary-dark transition-colors">
+            <Link href="/signup" className="inline-block text-white px-6 py-3 rounded-xl font-bold bg-primary bg-gradient-to-r from-primary to-secondary shadow-md hover:opacity-90 transition-colors">
               إنشاء حساب جديد
             </Link>
           </div>
